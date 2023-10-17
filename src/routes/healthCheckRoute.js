@@ -3,17 +3,17 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/users:
+ * /api/health-check:
  *   get:
- *     summary: Get a list of users.
+ *     summary: Check if the server is running.
  *     responses:
  *       200:
- *         description: Successfully retrieved the list of users.
+ *         description: Server is up and running.
  *       500:
  *         description: Internal Server Error.
  */
-router.get('/users', (req, res) => {
-  res.json({ status: 'User`s Server is running' });
+router.get('/health-check', (req, res) => {
+  res.json({ status: 'Ella`s Server is running' });
 });
 
 module.exports = router;
