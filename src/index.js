@@ -1,5 +1,6 @@
 const express = require('express'); 
 const { swaggerUi, swaggerSpec } = require('../swagger');
+const notFoundMiddleware = require('./middlewares/notFoundMiddleware');
 const errorHandler = require('./middlewares/errorHandlingMiddleware');
 const routes = require('./routes/routes');
 
@@ -9,6 +10,7 @@ const PORT = 3000;
 app.use('/api', routes); 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+app.use(notFoundMiddleware);
 app.use(errorHandler);
  
 app.listen(PORT, () => { 
