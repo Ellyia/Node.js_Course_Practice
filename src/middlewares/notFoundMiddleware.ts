@@ -1,11 +1,7 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from 'express';
 
-const notFoundMiddleware = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  res.status(404).json({ error: "Not Found" });
+const notFoundMiddleware = (req: Request, res: Response) => {
+  res.status(404).json({ error: 'Not Found' });
 };
 
 export default notFoundMiddleware;

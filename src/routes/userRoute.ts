@@ -1,4 +1,4 @@
-import express, { Request, Response, Router } from "express";
+import express, { Request, Response, Router } from 'express';
 
 const router: Router = express.Router();
 
@@ -15,8 +15,8 @@ const router: Router = express.Router();
  *       404:
  *         description: Not Found.
  */
-router.get("/users", (req: Request, res: Response) => {
-  res.json({ status: "Successfully retrieved the list of users" });
+router.get('/users', (req: Request, res: Response) => {
+  res.json({ status: 'Successfully retrieved the list of users' });
 });
 
 export default router;
