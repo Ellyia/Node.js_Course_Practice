@@ -7,12 +7,12 @@ const swaggerDefinition = {
     version: '1.0.0',
     description: 'API documentation for Ella`s Node.js application',
   },
-  basePath: '/api',
+  basePath: '/api'
 };
 
 const options = {
   swaggerDefinition,
-  apis: ['./src/routes/*.ts', './src/models/*.ts'],
+  apis: ['./src/routes/*.ts'],
 };
 
 const swaggerSpec = swaggerJSDoc(options);

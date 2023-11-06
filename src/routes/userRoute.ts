@@ -4,9 +4,17 @@ const router: Router = express.Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: Users
+ *   description: API endpoints for managing users
+ */
+
+/**
+ * @swagger
  * /api/users:
  *   get:
  *     summary: Get a list of users.
+ *     tags: [Users]
  *     responses:
  *       200:
  *         description: Successfully retrieved the list of users.
