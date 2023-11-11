@@ -3,7 +3,7 @@ import validateMovie from '../middlewares/requestValidationMiddleware';
 import {
   getMovies,
   createMovie,
-  getMovieById,
+  getMovieByName,
   updateMovie,
   deleteMovie,
 } from '../controllers/moviesController';
@@ -34,30 +34,50 @@ router.get('/movies', getMovies);
 /**
  * @swagger
  * /api/movies:
- *   post:
+ *   put:
  *     summary: Create a new movie.
  *     tags: [Movies]
+ *     requestBody:
+ *       description: New info of the movie.
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: New name of the movie.
+ *               description:
+ *                 type: string
+ *                 description: New description of the movie.
+ *               releaseDate:
+ *                 type: string
+ *                 description: New releaseDate of the movie.
+ *               genre:
+ *                 type: string
+ *                 description: New genre of the movie.
  *     responses:
  *       201:
  *         description: Movie created successfully.
  *       400:
- *         description: Error creating the movie.
+ *         description: Error creating the movie. / Movie with the same title already exists.
  */
- router.post('/movies', validateMovie, createMovie);
+ router.put('/movies', validateMovie, createMovie);
 
 /**
  * @swagger
- * /api/movies/{movieId}:
+ * /api/movies/getOne:
  *   get:
- *     summary: Get a movie by ID.
+ *     summary: Get a movie by Title.
  *     tags: [Movies]
  *     parameters:
- *       - in: path
- *         name: movieId
+ *       - in: query
+ *         name: title
  *         schema:
  *           type: string
  *         required: true
- *         description: The ID of the movie.
+ *         description: The title of the movie.
  *     responses:
  *       200:
  *         description: Movie details.
@@ -65,16 +85,42 @@ router.get('/movies', getMovies);
  *         description: Movie not found.
  *       500:
  *         description: Internal Server Error.
- *   put:
- *     summary: Update a movie by ID.
+ */
+router.get('/movies/getOne', getMovieByName); // http://localhost:3000/api/movies/getOne?title=titleName
+
+/**
+ * @swagger
+ * /api/movies/{title}:
+ *   post:
+ *     summary: Update a movie by Title.
  *     tags: [Movies]
  *     parameters:
  *       - in: path
- *         name: movieId
+ *         name: title
  *         schema:
  *           type: string
  *         required: true
- *         description: The ID of the movie.
+ *         description: The title of the movie.
+ *     requestBody:
+ *       description: New info of the movie.
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: New name of the movie.
+ *               description:
+ *                 type: string
+ *                 description: New description of the movie.
+ *               releaseDate:
+ *                 type: string
+ *                 description: New releaseDate of the movie.
+ *               genre:
+ *                 type: string
+ *                 description: New genre of the movie.
  *     responses:
  *       200:
  *         description: Updated movie.
@@ -82,16 +128,22 @@ router.get('/movies', getMovies);
  *         description: Movie not found.
  *       500:
  *         description: Internal Server Error.
+ */
+router.post('/movies/:title', updateMovie); // http://localhost:3000/api/movies/titleName
+
+/**
+ * @swagger
+ * /api/movies/{title}:
  *   delete:
- *     summary: Delete a movie by ID.
+ *     summary: Delete a movie by title.
  *     tags: [Movies]
  *     parameters:
  *       - in: path
- *         name: movieId
+ *         name: title
  *         schema:
  *           type: string
  *         required: true
- *         description: The ID of the movie.
+ *         description: The title of the movie.
  *     responses:
  *       200:
  *         description: Movie deleted successfully.
@@ -100,8 +152,6 @@ router.get('/movies', getMovies);
  *       500:
  *         description: Internal Server Error.
  */
-router.get('/movies/:movieId', getMovieById);
-router.put('/movies/:movieId', validateMovie, updateMovie);
-router.delete('/movies/:movieId', deleteMovie);
+router.delete('/movies/:title', deleteMovie);
 
 export default router;

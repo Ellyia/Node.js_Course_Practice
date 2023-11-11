@@ -1,5 +1,5 @@
 import express, { Request, Response, Router } from 'express';
-
+import userModel, { IUser } from '../models/userModel';
 const router: Router = express.Router();
 
 /**
@@ -23,8 +23,24 @@ const router: Router = express.Router();
  *       404:
  *         description: Not Found.
  */
-router.get('/users', (req: Request, res: Response) => {
-  res.json({ status: 'Successfully retrieved the list of users' });
+router.get('/users', async (req: Request, res: Response) => {
+  const users = await userModel.find({});
+  try {
+    res.send(users);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+router.post("/users", async (req: Request, res: Response) => {
+  const user = new userModel(req.body);
+
+  try {
+    await user.save();
+    res.send(user);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 export default router;

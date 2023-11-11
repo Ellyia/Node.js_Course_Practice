@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import Genre, { IGenreDocument } from '../models/genreModel';
 
 // Get all genres
-export const getGenres = async (req: Request, res: Response) => {
+export const getGenres = async (req: Request, res: Response): Promise<void> => {
   try {
-    const genres = await Genre.find();
+    const genres: IGenreDocument[] = await Genre.find();
     res.json(genres);
   } catch (err) {
     res.status(500).json({ error: 'An error occurred while fetching genres.' });
@@ -12,16 +12,16 @@ export const getGenres = async (req: Request, res: Response) => {
 };
 
 // Create a new genre
-export const createGenre = async (req: Request, res: Response) => {
+export const createGenre = async (req: Request, res: Response): Promise<void> => {
   try {
     const { name } = req.body;
     if (!name) {
-      return res.status(400).json({ error: 'Genre name is required.' });
+      res.status(400).json({ error: 'Genre name is required.' });
     }
 
     const existingGenre = await Genre.findOne({ name });
     if (existingGenre) {
-      return res.status(400).json({ error: 'Genre with the same name already exists.' });
+      res.status(400).json({ error: 'Genre with the same name already exists.' });
     }
 
     const newGenre = new Genre({ name });
@@ -33,14 +33,15 @@ export const createGenre = async (req: Request, res: Response) => {
 };
 
 // Update a genre
-export const updateGenre = async (req: Request, res: Response) => {
-  try {
-    const { name } = req.params;
-    const { newName } = req.body;
-    if (!name || !newName) {
-      return res.status(400).json({ error: 'Both current name and new name are required.' });
-    }
+export const updateGenre = async (req: Request, res: Response): Promise<void> => {
+  const { name } = req.params;
+  const newName = req.body?.name;
 
+  if (!name || !newName) {
+    res.status(400).json({ error: 'Both current name and new name are required.' });
+  }
+
+  try {
     const existingGenre = await Genre.findOne({ name });
     if (!existingGenre) {
       res.status(404).json({ error: 'Genre not found.' });
@@ -55,11 +56,11 @@ export const updateGenre = async (req: Request, res: Response) => {
 };
 
 // Delete a genre
-export const deleteGenre = async (req: Request, res: Response) => {
+export const deleteGenre = async (req: Request, res: Response): Promise<void> => {
   try {
     const { name } = req.params;
-    const deletedGenre = await Genre.findOneAndDelete({ name });
-    if (!deletedGenre) {
+    const deletedStatus = await Genre.deleteOne({ name: name });
+    if (!deletedStatus.deletedCount) {
       res.status(404).json({ error: 'Genre not found.' });
     } else {
       res.json({ status: 'Genre deleted successfully' });

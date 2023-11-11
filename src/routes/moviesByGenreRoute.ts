@@ -34,7 +34,7 @@ router.get('/movies/genre/:genreName', async (req: Request, res: Response) => {
     const movies = await Movie.find({ genre: genreName });
     res.json(movies);
   } catch (err) {
-    res.status(500).json({ error: 'An error occurred while searching for movies.' });
+    res.status(400).json({ error: 'An error occurred while searching for movies.' });
   }
 });
 
