@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 
 import { swaggerUi, swaggerSpec } from './swagger';
@@ -26,6 +26,10 @@ app.use(bodyParser.json());
 
 app.use('/api', routes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+app.get('/', (req: Request, res: Response) => {
+  res.send("This is a root path");
+})
 
 app.use(notFoundMiddleware);
 app.use(errorHandler);

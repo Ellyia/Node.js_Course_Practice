@@ -129,7 +129,7 @@ router.get('/movies/getOne', getMovieByName); // http://localhost:3000/api/movie
  *       500:
  *         description: Internal Server Error.
  */
-router.post('/movies/:title', updateMovie); // http://localhost:3000/api/movies/titleName
+router.post('/movies/:title', validateMovie, updateMovie); // http://localhost:3000/api/movies/titleName
 
 /**
  * @swagger

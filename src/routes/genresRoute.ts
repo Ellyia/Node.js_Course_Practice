@@ -1,5 +1,5 @@
 import express, { Request, Response, Router } from 'express';
-
+import { validateGenre } from '../middlewares/requestValidationMiddleware';
 import {
   getGenres,
   createGenre,
@@ -69,7 +69,7 @@ router.get('/genres', getGenres);
  *       500:
  *         description: Internal Server Error.
  */
-router.put('/genres', createGenre);
+router.put('/genres', validateGenre, createGenre);
 
 /**
  * @swagger
@@ -129,6 +129,6 @@ router.delete('/genres/:name', deleteGenre);
  *       500:
  *         description: Internal Server Error.      
  */
-router.post('/genres/:name', updateGenre);
+router.post('/genres/:name', validateGenre, updateGenre);
 
 export default router;
