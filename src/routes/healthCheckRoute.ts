@@ -1,5 +1,6 @@
-const express = require('express');
-const router = express.Router();
+import express, { Request, Response, Router } from 'express';
+
+const router: Router = express.Router();
 
 /**
  * @swagger
@@ -11,9 +12,11 @@ const router = express.Router();
  *         description: Server is up and running.
  *       500:
  *         description: Internal Server Error.
+ *       404:
+ *         description: Not Found.
  */
-router.get('/health-check', (req, res) => {
+router.get('/health-check', (req: Request, res: Response) => {
   res.json({ status: 'Ella`s Server is running' });
 });
 
-module.exports = router;
+export default router;
