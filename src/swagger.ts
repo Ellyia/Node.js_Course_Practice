@@ -7,7 +7,7 @@ const swaggerDefinition = {
     version: '1.0.0',
     description: 'API documentation for Ella`s Node.js application',
   },
-  basePath: '/api',
+  basePath: '/api'
 };
 
 const options = {
